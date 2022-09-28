@@ -1,0 +1,41 @@
+apply plugin: 'com.android.library'
+
+apply from: "$rootDir/builder.gradle"
+
+apply plugin: 'kotlin-parcelize'
+
+android {
+    namespace 'com.hieubui.jetflix.core'
+
+    defaultConfig {
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+
+        release {
+            minifyEnabled true
+
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    api(
+        libs.core,
+        libs.coroutines,
+        libs.dagger,
+        libs.gson,
+        libs.timber
+    )
+
+    implementation(libs.retrofit)
+
+    kapt(kaptLibs.daggerCompiler)
+
+    testImplementation(testLibs.kotlinxCoroutines)
+}

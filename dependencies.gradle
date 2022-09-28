@@ -1,0 +1,91 @@
+ext {
+    versions = [
+        compileSdk        : 33,
+        minSdk            : 22,
+        targetSdk         : 33,
+
+        core              : '1.9.0',
+        coroutines        : '1.6.4',
+
+        compose           : '1.2.1',
+
+        fragment          : '1.5.2',
+
+        lifecycle         : '2.5.1',
+        navigation        : '2.5.2',
+        room              : '2.4.2',
+
+        dagger            : '2.44',
+        gson              : '2.9.1',
+
+        okHTTP            : "4.10.0",
+        retrofit          : "2.9.0",
+
+        easypermissions   : '3.0.0',
+        coil              : '2.2.1',
+
+        loggingInterceptor: "3.0.0",
+
+        timber            : '5.0.1',
+    ]
+
+    libs = [
+        core                     : "androidx.core:core-ktx:${versions.core}",
+        coroutines               : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}",
+
+        composeUI                : "androidx.compose.ui:ui:${versions.compose}",
+        composeToolingPreview    : "androidx.compose.ui:ui-tooling-preview:${versions.compose}",
+        composeMaterial          : "androidx.compose.material:material:${versions.compose}",
+        composeLiveData          : "androidx.compose.runtime:runtime-livedata:${versions.compose}",
+
+        fragment                 : "androidx.fragment:fragment-ktx:${versions.fragment}",
+
+        lifecycleRuntime         : "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}",
+
+        navigationFragment       : "androidx.navigation:navigation-fragment-ktx:${versions.navigation}",
+        navigationUI             : "androidx.navigation:navigation-ui-ktx:${versions.navigation}",
+        navigationDynamicFeatures: "androidx.navigation:navigation-dynamic-features-fragment:${versions.navigation}",
+
+        roomRuntime              : "androidx.room:room-runtime:${versions.room}",
+        room                     : "androidx.room:room-ktx:${versions.room}",
+
+        dagger                   : "com.google.dagger:dagger:${versions.dagger}",
+        gson                     : "com.google.code.gson:gson:${versions.gson}",
+
+        okHTTP                   : "com.squareup.okhttp3:okhttp:${versions.okHTTP}",
+
+        retrofit                 : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+        converterGSON            : "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
+
+        easypermissions          : "pub.devrel:easypermissions:${versions.easypermissions}",
+        coil                     : "io.coil-kt:coil-compose:${versions.coil}",
+
+        loggingInterceptor       : "com.github.ihsanbal:LoggingInterceptor:${versions.loggingInterceptor}",
+
+        timber                   : "com.jakewharton.timber:timber:${versions.timber}",
+    ]
+
+    debugLibs = [
+        composeTooling: "androidx.compose.ui:ui-tooling:${versions.compose}"
+    ]
+
+    kaptLibs = [
+        daggerCompiler: "com.google.dagger:dagger-compiler:${versions.dagger}",
+
+        roomCompiler  : "androidx.room:room-compiler:${versions.room}"
+    ]
+
+    testLibs = [
+        junit            : 'junit:junit:4.13.2',
+
+        kotlinxCoroutines: 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    ]
+
+    androidTestLibs = [
+        junit     : 'androidx.test.ext:junit:1.1.3',
+
+        espresso  : 'androidx.test.espresso:espresso-core:3.4.0',
+
+        annotation: 'androidx.annotation:annotation:1.3.0'
+    ]
+}
