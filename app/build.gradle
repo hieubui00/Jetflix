@@ -7,6 +7,9 @@ android {
 
     defaultConfig {
         applicationId 'com.hieubui.jetflix'
+
+        buildConfigField "String", "API_HOST", String.format("\"%s\"", API_HOST)
+        buildConfigField "String", "API_KEY", String.format("\"%s\"", API_KEY)
     }
 
     buildFeatures {
@@ -63,6 +66,16 @@ dependencies {
         libs.dagger,
         libs.coil
     )
+
+    implementation(
+        libs.okHTTP,
+        libs.retrofit,
+        libs.converterGSON
+    )
+
+    implementation(libs.loggingInterceptor) {
+        exclude group: 'org.json', module: 'json'
+    }
 
     debugImplementation(debugLibs.composeTooling)
 
