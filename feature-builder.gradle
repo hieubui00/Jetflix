@@ -1,0 +1,38 @@
+apply plugin: 'com.android.dynamic-feature'
+
+apply from: "$rootDir/builder.gradle"
+
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+android {
+    buildFeatures {
+        compose true
+    }
+
+    flavorDimensions 'default'
+    productFlavors {
+        develop {
+            dimension 'default'
+        }
+
+        production {
+            dimension 'default'
+        }
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.3.1'
+    }
+}
+
+dependencies {
+    implementation project(':app')
+    implementation project(':core')
+    implementation project(':resources')
+
+    debugImplementation(debugLibs.composeTooling)
+
+    kapt(kaptLibs.daggerCompiler)
+
+    androidTestImplementation(androidTestLibs.annotation)
+}

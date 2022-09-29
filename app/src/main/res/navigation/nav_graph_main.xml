@@ -6,7 +6,8 @@
 
     <fragment
         android:id="@+id/fragment_home"
-        android:name="com.hieubui.jetflix.ui.main.home.HomeFragment"
-        android:label="Home" />
+        android:name="com.hieubui.jetflix.home.ui.HomeFragment"
+        android:label="Home"
+        app:moduleName="home" />
 
 </navigation>
