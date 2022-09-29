@@ -8,10 +8,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.hieubui.jetflix.home.R
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 import kotlinx.coroutines.Dispatchers
 
@@ -30,7 +32,7 @@ internal fun MoviePoster(
     SubcomposeAsyncImage(
         modifier = modifier,
         model = model,
-        contentDescription = "Poster",
+        contentDescription = stringResource(id = R.string.poster),
         contentScale = ContentScale.FillWidth,
         loading = {
             Box {

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="com.hieubui.jetflix.home">
+    package="com.hieubui.jetflix.movie.details">
 
     <dist:module
         dist:instant="false"
-        dist:title="@string/title_home">
+        dist:title="@string/title_movie_details">
 
         <dist:delivery>
 

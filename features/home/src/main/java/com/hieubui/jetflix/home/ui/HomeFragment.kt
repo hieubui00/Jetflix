@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -86,7 +87,7 @@ class HomeFragment : Fragment() {
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_filter),
-                                contentDescription = "Filter"
+                                contentDescription = stringResource(id = R.string.filter)
                             )
                         }
                     },

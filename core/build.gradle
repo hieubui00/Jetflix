@@ -5,8 +5,6 @@ apply from: "$rootDir/builder.gradle"
 apply plugin: 'kotlin-parcelize'
 
 android {
-    namespace 'com.hieubui.jetflix.core'
-
     defaultConfig {
         consumerProguardFiles 'consumer-rules.pro'
     }

@@ -7,7 +7,19 @@
     <fragment
         android:id="@+id/fragment_home"
         android:name="com.hieubui.jetflix.home.ui.HomeFragment"
-        android:label="Home"
-        app:moduleName="home" />
+        android:label="@string/title_home"
+        app:moduleName="home">
+
+        <action
+            android:id="@+id/navigate_to_movie_details"
+            app:destination="@id/fragment_movie_details" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_movie_details"
+        android:name="com.hieubui.jetflix.movie.details.ui.MovieDetailsFragment"
+        android:label="@string/title_movie_details"
+        app:moduleName="movie_details" />
 
 </navigation>

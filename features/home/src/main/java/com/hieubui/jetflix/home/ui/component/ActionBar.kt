@@ -14,9 +14,9 @@ import androidx.compose.material.IconToggleButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -57,7 +57,7 @@ internal fun ActionBar(
             Image(      // Logo
                 modifier = Modifier.padding(vertical = 16.dp),
                 painter = painterResource(id = R.drawable.ic_logo),
-                contentDescription = "Logo"
+                contentDescription = stringResource(id = R.string.logo)
             )
 
             Spacer(modifier = Modifier.weight(weight = 1f))
