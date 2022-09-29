@@ -16,7 +16,7 @@ import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 @Composable
 internal fun MovieRating(
     modifier: Modifier = Modifier,
-    rating: Float
+    rating: Float?
 ) {
     Surface(
         modifier = modifier,
@@ -29,7 +29,7 @@ internal fun MovieRating(
             fontWeight = FontWeight.Bold,
             maxLines = 1,
             color = Color.Black,
-            text = rating.toString()
+            text = (rating ?: 0.0f).toString()
         )
     }
 }

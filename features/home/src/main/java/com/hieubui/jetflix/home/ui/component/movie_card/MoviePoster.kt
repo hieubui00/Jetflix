@@ -1,11 +1,16 @@
 package com.hieubui.jetflix.home.ui.component.movie_card
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import coil.compose.AsyncImage
+import androidx.compose.ui.unit.dp
+import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 import kotlinx.coroutines.Dispatchers
@@ -22,11 +27,23 @@ internal fun MoviePoster(
         .crossfade(true)
         .build()
 
-    AsyncImage(
+    SubcomposeAsyncImage(
         modifier = modifier,
         model = model,
         contentDescription = "Poster",
-        contentScale = ContentScale.FillBounds
+        contentScale = ContentScale.FillWidth,
+        loading = {
+            Box {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .align(alignment = Alignment.Center)
+                )
+            }
+        },
+        error = {
+
+        }
     )
 }
 
