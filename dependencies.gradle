@@ -78,6 +78,8 @@ ext {
     testLibs = [
         junit            : 'junit:junit:4.13.2',
 
+        mockk            : 'io.mockk:mockk:1.13.1',
+
         kotlinxCoroutines: 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
     ]
 

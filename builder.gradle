@@ -22,7 +22,10 @@ android {
 }
 
 dependencies {
-    testImplementation(testLibs.junit)
+    testImplementation(
+        testLibs.junit,
+        testLibs.mockk
+    )
 
     androidTestImplementation(androidTestLibs.junit)
 }
