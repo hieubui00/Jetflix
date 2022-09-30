@@ -3,6 +3,7 @@ package com.hieubui.jetflix.home.ui.component.movie_card
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -34,7 +35,10 @@ internal fun MovieCard(
             elevation = 8.dp
         ) {
             MoviePoster(
-                modifier = Modifier.clickable(onClick = onClick),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(2f / 3f)
+                    .clickable(onClick = onClick),
                 poster = movie.poster
             )
 

@@ -1,6 +1,8 @@
 package com.hieubui.jetflix.home.ui.component.movie_card
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -33,7 +35,7 @@ internal fun MoviePoster(
         modifier = modifier,
         model = model,
         contentDescription = stringResource(id = R.string.poster),
-        contentScale = ContentScale.FillWidth,
+        contentScale = ContentScale.Crop,
         loading = {
             Box {
                 CircularProgressIndicator(
@@ -53,6 +55,11 @@ internal fun MoviePoster(
 @Composable
 private fun MoviePosterPreview() {
     JetflixTheme {
-        MoviePoster(poster = "https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/a/v/avatar_2__teaser_poster_1_.jpg")
+        MoviePoster(
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(2f / 3f),
+            poster = "https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/a/v/avatar_2__teaser_poster_1_.jpg"
+        )
     }
 }
