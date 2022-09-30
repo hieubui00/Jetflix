@@ -109,18 +109,13 @@ class HomeFragment : Fragment() {
                     .padding(horizontal = 16.dp),
                 columns = GridCells.Adaptive(minSize = 128.dp),
                 horizontalArrangement = Arrangement.spacedBy(space = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(space = 24.dp),
-                contentPadding = PaddingValues(
-                    top = 16.dp,
-                    bottom = 24.dp
-                )
+                verticalArrangement = Arrangement.spacedBy(space = 12.dp),
+                contentPadding = PaddingValues(vertical = 16.dp)
             ) {
                 items(items = it) { movie ->
                     MovieCard(
                         movie = movie,
-                        onClick = {
-
-                        }
+                        onClick = { }
                     )
                 }
             }

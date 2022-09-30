@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -30,7 +29,7 @@ internal fun MovieCard(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .offset(y = 12.dp),
+                .padding(top = 12.dp),
             shape = RoundedCornerShape(size = 8.dp),
             elevation = 8.dp
         ) {
@@ -44,7 +43,7 @@ internal fun MovieCard(
 
             MovieInformation(
                 modifier = Modifier
-                    .align(alignment = Alignment.BottomStart)
+                    .align(alignment = Alignment.BottomCenter)
                     .background(Color(0x66000000))
                     .padding(vertical = 4.dp),
                 title = movie.title,
