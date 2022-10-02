@@ -1,13 +1,7 @@
 package com.hieubui.jetflix.home.ui.component.movie_card
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -24,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hieubui.jetflix.home.R
+import com.hieubui.jetflix.home.util.toString
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -40,8 +35,6 @@ internal fun MovieInformation(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
         Text(   // Title
             modifier = Modifier.padding(horizontal = 8.dp),
             fontSize = 16.sp,
@@ -70,7 +63,7 @@ internal fun MovieInformation(
                 fontSize = 12.sp,
                 color = Color.White,
                 maxLines = 1,
-                text = releaseDate?.let { simpleDateFormat.format(it) }.orEmpty()
+                text = releaseDate?.toString("yyyy-MM-dd").orEmpty()
             )
 
             Spacer(modifier = Modifier.weight(weight = 1f))
