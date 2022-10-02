@@ -1,0 +1,2 @@
+-keep class com.hieubui.jetflix.core.data.remote.model.** { *; }
+-keep class com.hieubui.jetflix.core.data.remote.response.** { *; }

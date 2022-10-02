@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.hieubui.jetflix.core.data.model.Movie
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 @Composable
 internal fun MovieCard(
