@@ -8,14 +8,21 @@ import com.hieubui.jetflix.core.data.remote.request.TheMovieDatabaseService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Named
 
 interface MovieRepository {
 
-    suspend fun getDiscoverMovies(page: Int = 1): List<Movie>
+    suspend fun getDiscoverMovies(
+        page: Int = 1,
+        language: String = Locale.getDefault().language
+    ): List<Movie>
 
-    suspend fun getMovieDetails(movieId: Int): MovieDetails
+    suspend fun getMovieDetails(
+        movieId: Int,
+        language: String = Locale.getDefault().language
+    ): MovieDetails
 }
 
 class MovieRepositoryImpl @Inject constructor(
@@ -24,12 +31,15 @@ class MovieRepositoryImpl @Inject constructor(
     @Named("io") private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : MovieRepository {
 
-    override suspend fun getDiscoverMovies(page: Int): List<Movie> = withContext(dispatcher) {
+    override suspend fun getDiscoverMovies(
+        page: Int,
+        language: String
+    ): List<Movie> = withContext(dispatcher) {
         if (page < 1 || page > 500) {
             return@withContext listOf()
         }
 
-        val response = theMovieDatabaseService.getDiscoverMovies(page)
+        val response = theMovieDatabaseService.getDiscoverMovies(page, language)
 
         return@withContext response.results?.map {
             Movie(
@@ -44,8 +54,11 @@ class MovieRepositoryImpl @Inject constructor(
         } ?: listOf()
     }
 
-    override suspend fun getMovieDetails(movieId: Int): MovieDetails = withContext(dispatcher) {
-        val response = theMovieDatabaseService.getMovieDetails(movieId)
+    override suspend fun getMovieDetails(
+        movieId: Int,
+        language: String
+    ): MovieDetails = withContext(dispatcher) {
+        val response = theMovieDatabaseService.getMovieDetails(movieId, language)
         val genre = response.genres?.map {
             Genre(
                 genreId = it.genreId,
