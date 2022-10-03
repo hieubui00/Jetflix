@@ -1,6 +1,7 @@
 package com.hieubui.jetflix.core.data.repository
 
 import com.hieubui.jetflix.core.data.model.Genre
+import com.hieubui.jetflix.core.data.model.ProductionCompany
 import com.hieubui.jetflix.core.data.model.movie.Movie
 import com.hieubui.jetflix.core.data.model.movie.MovieDetails
 import com.hieubui.jetflix.core.data.remote.request.TheMovieDatabaseService
@@ -51,6 +52,14 @@ class MovieRepositoryImpl @Inject constructor(
                 name = it.name
             )
         }
+        val productionCompanies = response.productionCompanies?.map {
+            ProductionCompany(
+                productionCompanyId = it.productionCompanyId,
+                name = it.name,
+                originCountry = it.originCountry,
+                logo = "https://image.tmdb.org/t/p/original${it.logoPath}",
+            )
+        }
 
         return@withContext MovieDetails(
             movieId = response.movieId,
@@ -59,7 +68,7 @@ class MovieRepositoryImpl @Inject constructor(
             duration = response.duration,
             genres = genre,
             releaseDate = response.releaseDate,
-            productionCompanies = response.productionCompanies,
+            productionCompanies = productionCompanies,
             overview = response.overview,
             backdrop = "https://image.tmdb.org/t/p/original${response.backdropPath}",
             poster = "https://image.tmdb.org/t/p/w342${response.posterPath}",

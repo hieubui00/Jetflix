@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -14,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
@@ -27,6 +31,7 @@ import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -36,10 +41,12 @@ import androidx.core.view.WindowCompat.getInsetsController
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.hieubui.jetflix.movie.details.R
 import com.hieubui.jetflix.movie.details.inject.component.DaggerMovieDetailsComponent
 import com.hieubui.jetflix.movie.details.ui.component.BackButton
 import com.hieubui.jetflix.movie.details.ui.component.Backdrop
 import com.hieubui.jetflix.movie.details.ui.component.PosterCard
+import com.hieubui.jetflix.movie.details.ui.component.ProductionCompanyCard
 import com.hieubui.jetflix.movie.details.ui.component.RatingBar
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 import com.hieubui.jetflix.ui.main.MainActivity
@@ -122,7 +129,7 @@ class MovieDetailsFragment : Fragment() {
                     .padding(top = 16.dp)
                     .align(alignment = CenterHorizontally),
                 fontSize = 24.sp,
-                fontWeight = FontWeight.Medium,
+                fontWeight = FontWeight.Bold,
                 color = colors.onSurface,
                 text = movieDetails?.title.orEmpty()
             )
@@ -146,6 +153,46 @@ class MovieDetailsFragment : Fragment() {
                 max = 10.0f,
                 rating = movieDetails?.voteAverage ?: 0.0f
             )
+
+            movieDetails?.overview?.takeIf { it.isNotBlank() }?.let {
+                Text(
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .padding(horizontal = 16.dp),
+                    fontSize = 16.sp,
+                    color = colors.onSurface,
+                    text = it
+                )
+            }
+
+            movieDetails?.productionCompanies?.let {
+                Text(
+                    modifier = Modifier.padding(
+                        top = 16.dp,
+                        start = 16.dp
+                    ),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = colors.onSurface,
+                    text = stringResource(R.string.production_companies)
+                )
+
+                LazyRow(
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    horizontalArrangement = spacedBy(space = 16.dp)
+                ) {
+                    items(items = it) { productionCompany ->
+                        ProductionCompanyCard(
+                            modifier = Modifier.size(
+                                width = 192.dp,
+                                height = 128.dp
+                            ),
+                            productionCompany = productionCompany
+                        )
+                    }
+                }
+            }
         }
     }
 

@@ -1,7 +1,7 @@
 package com.hieubui.jetflix.core.data.model.movie
 
 import com.hieubui.jetflix.core.data.model.Genre
-import com.hieubui.jetflix.core.data.remote.model.ProductionCompanyModel
+import com.hieubui.jetflix.core.data.model.ProductionCompany
 import java.util.Date
 
 data class MovieDetails(
@@ -17,7 +17,7 @@ data class MovieDetails(
 
     val releaseDate: Date?,
 
-    val productionCompanies: List<ProductionCompanyModel>?,
+    val productionCompanies: List<ProductionCompany>?,
 
     val overview: String?,
 

@@ -22,6 +22,7 @@ data class MovieDetailsResponse(
     @SerializedName("release_date")
     val releaseDate: Date?,
 
+    @SerializedName("production_companies")
     val productionCompanies: List<ProductionCompanyModel>?,
 
     val overview: String?,
