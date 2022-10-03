@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
@@ -22,6 +24,7 @@ import androidx.core.view.WindowCompat.getInsetsController
 import androidx.fragment.app.Fragment
 import com.hieubui.jetflix.movie.details.ui.component.BackButton
 import com.hieubui.jetflix.movie.details.ui.component.Backdrop
+import com.hieubui.jetflix.movie.details.ui.component.PosterCard
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 
 class MovieDetailsFragment : Fragment() {
@@ -41,6 +44,7 @@ class MovieDetailsFragment : Fragment() {
     @Composable
     private fun Content(modifier: Modifier = Modifier) {
         val backdrop = "https://image.tmdb.org/t/p/original/cyV2syN5zRQwU6BmWMyMFyjRLow.jpg"
+        val poster = "https://image.tmdb.org/t/p/w342/lG56H40Y1BuHSPoWtEgDJsSgDBZ.jpg"
         val scrollState = rememberScrollState()
 
         Column(modifier = modifier.verticalScroll(scrollState)) {
@@ -58,6 +62,14 @@ class MovieDetailsFragment : Fragment() {
                         .padding(all = 16.dp)
                         .size(size = 24.dp),
                     onClick = this@MovieDetailsFragment::back
+                )
+
+                PosterCard(
+                    modifier = Modifier
+                        .width(160.dp)
+                        .padding(top = 128.dp)
+                        .align(alignment = BottomCenter),
+                    data = poster
                 )
             }
         }
