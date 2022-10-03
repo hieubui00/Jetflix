@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -30,10 +33,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -41,7 +46,7 @@ import androidx.core.view.WindowCompat.getInsetsController
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.hieubui.jetflix.movie.details.R
+import com.hieubui.jetflix.movie.details.R.string
 import com.hieubui.jetflix.movie.details.inject.component.DaggerMovieDetailsComponent
 import com.hieubui.jetflix.movie.details.ui.component.BackButton
 import com.hieubui.jetflix.movie.details.ui.component.Backdrop
@@ -49,6 +54,7 @@ import com.hieubui.jetflix.movie.details.ui.component.PosterCard
 import com.hieubui.jetflix.movie.details.ui.component.ProductionCompanyCard
 import com.hieubui.jetflix.movie.details.ui.component.RatingBar
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
+import com.hieubui.jetflix.resources.util.toString
 import com.hieubui.jetflix.ui.main.MainActivity
 import com.hieubui.jetflix.util.ViewModelFactory
 import javax.inject.Inject
@@ -98,7 +104,11 @@ class MovieDetailsFragment : Fragment() {
         }
 
         setLightStatusBar(false)
-        Column(modifier = modifier.verticalScroll(scrollState)) {
+        Column(
+            modifier = modifier
+                .verticalScroll(scrollState)
+                .background(colors.surface)
+        ) {
             Box(modifier = Modifier.zIndex(zIndex = 2f)) {
                 Backdrop(
                     modifier = Modifier
@@ -129,7 +139,7 @@ class MovieDetailsFragment : Fragment() {
                     .padding(top = 16.dp)
                     .align(alignment = CenterHorizontally),
                 fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
+                fontWeight = Bold,
                 color = colors.onSurface,
                 text = movieDetails?.title.orEmpty()
             )
@@ -146,16 +156,55 @@ class MovieDetailsFragment : Fragment() {
                 )
             }
 
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                val releaseDate = movieDetails?.releaseDate?.toString("yyyy-MM-dd").orEmpty()
+                val duration = movieDetails?.duration?.let { "$it min" }.orEmpty()
+                val voteAvg = movieDetails?.voteAverage?.toString().orEmpty()
+                val voteCount = movieDetails?.voteCount?.toString().orEmpty()
+                val data = mapOf(
+                    stringResource(string.release_date) to releaseDate,
+                    stringResource(string.duration) to duration,
+                    stringResource(string.vote_avg) to voteAvg,
+                    stringResource(string.vote_count) to voteCount,
+                )
+
+                data.entries.forEach {
+                    Column(
+                        horizontalAlignment = CenterHorizontally,
+                        verticalArrangement = spacedBy(4.dp)
+                    ) {
+                        Text(
+                            fontSize = 16.sp,
+                            color = colors.onSurface,
+                            text = it.key
+                        )
+
+                        Text(
+                            fontSize = 14.sp,
+                            fontWeight = Bold,
+                            color = colors.onSurface,
+                            text = it.value
+                        )
+                    }
+                }
+            }
+
             RatingBar(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .align(alignment = CenterHorizontally),
+                tint = Color(0xFFFFDE17),
                 max = 10.0f,
                 rating = movieDetails?.voteAverage ?: 0.0f
             )
 
             movieDetails?.overview?.takeIf { it.isNotBlank() }?.let {
-                Text(
+                Text(   // Overview
                     modifier = Modifier
                         .padding(top = 16.dp)
                         .padding(horizontal = 16.dp),
@@ -174,7 +223,7 @@ class MovieDetailsFragment : Fragment() {
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium,
                     color = colors.onSurface,
-                    text = stringResource(R.string.production_companies)
+                    text = stringResource(string.production_companies)
                 )
 
                 LazyRow(
