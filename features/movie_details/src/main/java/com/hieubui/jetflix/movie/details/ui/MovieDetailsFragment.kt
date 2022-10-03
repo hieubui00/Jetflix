@@ -1,5 +1,6 @@
 package com.hieubui.jetflix.movie.details.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,12 +29,38 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.core.view.WindowCompat.getInsetsController
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
+import com.hieubui.jetflix.movie.details.inject.component.DaggerMovieDetailsComponent
 import com.hieubui.jetflix.movie.details.ui.component.BackButton
 import com.hieubui.jetflix.movie.details.ui.component.Backdrop
 import com.hieubui.jetflix.movie.details.ui.component.PosterCard
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
+import com.hieubui.jetflix.ui.main.MainActivity
+import com.hieubui.jetflix.util.ViewModelFactory
+import javax.inject.Inject
 
 class MovieDetailsFragment : Fragment() {
+    private val model by viewModels<MovieDetailsViewModel> { factory }
+
+    @Inject
+    lateinit var factory: ViewModelFactory<MovieDetailsViewModel>
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        injectComponents()
+    }
+
+    private fun injectComponents() {
+        val args by navArgs<MovieDetailsFragmentArgs>()
+        val mainComponent = (activity as MainActivity).component
+
+        DaggerMovieDetailsComponent.builder()
+            .mainComponent(mainComponent)
+            .savedStateHandle(args.toSavedStateHandle())
+            .build()
+            .inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
