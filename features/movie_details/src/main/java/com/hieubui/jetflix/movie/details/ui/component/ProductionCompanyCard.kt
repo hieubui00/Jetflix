@@ -6,15 +6,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -31,6 +33,7 @@ internal fun ProductionCompanyCard(
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(size = 8.dp),
+        backgroundColor = White,
         elevation = 8.dp
     ) {
         Column(
@@ -60,7 +63,9 @@ internal fun ProductionCompanyCard(
                 modifier = Modifier.align(alignment = CenterHorizontally),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
-                color = colors.onBackground,
+                color = Black,
+                maxLines = 1,
+                overflow = Ellipsis,
                 text = productionCompany.name.orEmpty()
             )
         }

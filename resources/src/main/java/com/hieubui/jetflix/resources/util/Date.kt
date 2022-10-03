@@ -1,4 +1,4 @@
-package com.hieubui.jetflix.home.util
+package com.hieubui.jetflix.resources.util
 
 import java.text.SimpleDateFormat
 import java.util.Date

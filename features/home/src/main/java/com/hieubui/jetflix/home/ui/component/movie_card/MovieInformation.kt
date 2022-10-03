@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hieubui.jetflix.home.R
-import com.hieubui.jetflix.home.util.toString
+import com.hieubui.jetflix.resources.util.toString
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 import java.text.SimpleDateFormat
 import java.util.Date
