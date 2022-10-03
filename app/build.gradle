@@ -65,8 +65,7 @@ dependencies {
         libs.navigationFragment,
         libs.navigationUI,
         libs.navigationDynamicFeatures,
-        libs.dagger,
-        libs.coil
+        libs.dagger
     )
 
     implementation(

@@ -11,7 +11,7 @@ import androidx.compose.foundation.lazy.grid.GridCells.Adaptive
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +22,8 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.hieubui.jetflix.core.data.model.Movie
 import com.hieubui.jetflix.home.injection.component.DaggerHomeComponent
 import com.hieubui.jetflix.home.ui.component.ActionBar
 import com.hieubui.jetflix.home.ui.component.FilterButton
@@ -70,7 +72,7 @@ class HomeFragment : Fragment() {
             modifier = modifier,
             topBar = { ActionBar() },
             floatingActionButton = { FilterButton(onClick = { }) },
-            backgroundColor = MaterialTheme.colors.background,
+            backgroundColor = colors.background,
             content = { padding ->
                 val movies by model.movies.observeAsState(null)
 
@@ -87,7 +89,7 @@ class HomeFragment : Fragment() {
                         items(items = it) { movie ->
                             MovieCard(
                                 movie = movie,
-                                onClick = { }
+                                onClick = { navigateToMovieDetails(movie) }
                             )
                         }
                     }
@@ -104,5 +106,11 @@ class HomeFragment : Fragment() {
                 }
             }
         )
+    }
+
+    private fun navigateToMovieDetails(movie: Movie) {
+        val directions = HomeFragmentDirections.navigateToMovieDetails(movie.movieId ?: -1)
+
+        findNavController().navigate(directions)
     }
 }

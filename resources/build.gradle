@@ -36,6 +36,7 @@ dependencies {
         libs.composeMaterial,
         libs.fragment,
         libs.dagger,
+        libs.coil,
         libs.timber
     )
 
