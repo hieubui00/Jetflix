@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hieubui.jetflix.core.data.model.Movie
+import com.hieubui.jetflix.core.data.model.movie.Movie
 import com.hieubui.jetflix.core.data.repository.MovieRepository
 import com.hieubui.jetflix.home.injection.scope.HomeScope
 import kotlinx.coroutines.Job

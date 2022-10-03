@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.hieubui.jetflix.core.data.model.Movie
+import com.hieubui.jetflix.core.data.model.movie.Movie
 import com.hieubui.jetflix.home.injection.component.DaggerHomeComponent
 import com.hieubui.jetflix.home.ui.component.ActionBar
 import com.hieubui.jetflix.home.ui.component.FilterButton
