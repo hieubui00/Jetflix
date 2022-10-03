@@ -40,6 +40,7 @@ import com.hieubui.jetflix.movie.details.inject.component.DaggerMovieDetailsComp
 import com.hieubui.jetflix.movie.details.ui.component.BackButton
 import com.hieubui.jetflix.movie.details.ui.component.Backdrop
 import com.hieubui.jetflix.movie.details.ui.component.PosterCard
+import com.hieubui.jetflix.movie.details.ui.component.RatingBar
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 import com.hieubui.jetflix.ui.main.MainActivity
 import com.hieubui.jetflix.util.ViewModelFactory
@@ -137,6 +138,14 @@ class MovieDetailsFragment : Fragment() {
                     text = "($it)"
                 )
             }
+
+            RatingBar(
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .align(alignment = CenterHorizontally),
+                max = 10.0f,
+                rating = movieDetails?.voteAverage ?: 0.0f
+            )
         }
     }
 
