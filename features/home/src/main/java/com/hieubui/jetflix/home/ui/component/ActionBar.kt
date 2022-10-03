@@ -3,8 +3,17 @@ package com.hieubui.jetflix.home.ui.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.IconToggleButton
+import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +33,7 @@ internal fun ActionBar(
         modifier = Modifier
             .fillMaxWidth()
             .height(height = 56.dp)
-            .background(MaterialTheme.colors.surface)
+            .background(colors.surface)
             .then(modifier),
         elevation = 8.dp
     ) {
@@ -32,7 +41,7 @@ internal fun ActionBar(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(     // Settings button
+            IconButton( // Settings button
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .size(size = 24.dp),
@@ -41,17 +50,17 @@ internal fun ActionBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_settings),
                     contentDescription = stringResource(id = R.string.settings),
-                    tint = MaterialTheme.colors.onSurface
+                    tint = colors.onSurface
                 )
             }
 
-            Image(      // Logo
+            Image( // Logo
                 modifier = Modifier.padding(vertical = 16.dp),
                 painter = painterResource(id = R.drawable.ic_logo),
                 contentDescription = stringResource(id = R.string.logo)
             )
 
-            IconToggleButton(   // Theme Mode button
+            IconToggleButton( // Theme Mode button
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .size(size = 24.dp),
@@ -61,7 +70,7 @@ internal fun ActionBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_sunny),
                     contentDescription = stringResource(id = R.string.theme_mode),
-                    tint = MaterialTheme.colors.onSurface
+                    tint = colors.onSurface
                 )
             }
         }

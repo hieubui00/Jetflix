@@ -1,7 +1,13 @@
 package com.hieubui.jetflix.home.ui.component.movie_card
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -18,8 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hieubui.jetflix.home.R
-import com.hieubui.jetflix.resources.util.toString
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
+import com.hieubui.jetflix.resources.util.toString
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -33,9 +39,9 @@ internal fun MovieInformation(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = spacedBy(4.dp)
     ) {
-        Text(   // Title
+        Text( // Title
             modifier = Modifier.padding(horizontal = 8.dp),
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
@@ -58,7 +64,7 @@ internal fun MovieInformation(
                 tint = Color.White
             )
 
-            Text(   // Release Date
+            Text( // Release Date
                 modifier = Modifier.padding(horizontal = 4.dp),
                 fontSize = 12.sp,
                 color = Color.White,
@@ -77,7 +83,7 @@ internal fun MovieInformation(
                 tint = Color.White
             )
 
-            Text(   // Vote count
+            Text( // Vote count
                 modifier = Modifier.padding(end = 8.dp),
                 fontSize = 12.sp,
                 color = Color.White,

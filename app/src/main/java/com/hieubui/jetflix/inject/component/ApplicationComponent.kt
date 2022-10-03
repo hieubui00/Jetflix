@@ -1,7 +1,6 @@
 package com.hieubui.jetflix.inject.component
 
 import android.app.Application
-import com.hieubui.jetflix.inject.module.NetworkModule
 import com.hieubui.jetflix.inject.module.RepositoryModule
 import com.hieubui.jetflix.inject.module.SubcomponentModule
 import dagger.BindsInstance

@@ -46,6 +46,7 @@ import androidx.core.view.WindowCompat.getInsetsController
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.hieubui.jetflix.core.data.model.ProductionCompany
 import com.hieubui.jetflix.movie.details.R.string
 import com.hieubui.jetflix.movie.details.inject.component.DaggerMovieDetailsComponent
 import com.hieubui.jetflix.movie.details.ui.component.BackButton
@@ -134,7 +135,7 @@ class MovieDetailsFragment : Fragment() {
                 )
             }
 
-            Text(   // Title
+            Text( // Title
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .align(alignment = CenterHorizontally),
@@ -145,7 +146,7 @@ class MovieDetailsFragment : Fragment() {
             )
 
             movieDetails?.originalTitle?.let {
-                Text(   // Original title
+                Text( // Original title
                     modifier = Modifier
                         .padding(top = 4.dp)
                         .align(alignment = CenterHorizontally),
@@ -204,7 +205,7 @@ class MovieDetailsFragment : Fragment() {
             )
 
             movieDetails?.overview?.takeIf { it.isNotBlank() }?.let {
-                Text(   // Overview
+                Text( // Overview
                     modifier = Modifier
                         .padding(top = 16.dp)
                         .padding(horizontal = 16.dp),
@@ -215,32 +216,10 @@ class MovieDetailsFragment : Fragment() {
             }
 
             movieDetails?.productionCompanies?.let {
-                Text(
-                    modifier = Modifier.padding(
-                        top = 16.dp,
-                        start = 16.dp
-                    ),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = colors.onSurface,
-                    text = stringResource(string.production_companies)
+                ProductionCompaniesSection(
+                    label = stringResource(string.production_companies),
+                    productionCompanies = it
                 )
-
-                LazyRow(
-                    modifier = Modifier.padding(vertical = 16.dp),
-                    contentPadding = PaddingValues(horizontal = 16.dp),
-                    horizontalArrangement = spacedBy(space = 16.dp)
-                ) {
-                    items(items = it) { productionCompany ->
-                        ProductionCompanyCard(
-                            modifier = Modifier.size(
-                                width = 192.dp,
-                                height = 128.dp
-                            ),
-                            productionCompany = productionCompany
-                        )
-                    }
-                }
             }
         }
     }
@@ -261,6 +240,39 @@ class MovieDetailsFragment : Fragment() {
                     .size(48.dp)
                     .align(alignment = Alignment.Center)
             )
+        }
+    }
+
+    @Composable
+    private fun ProductionCompaniesSection(
+        label: String,
+        productionCompanies: List<ProductionCompany>
+    ) {
+        Text( // Label
+            modifier = Modifier.padding(
+                top = 16.dp,
+                start = 16.dp
+            ),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Medium,
+            color = colors.onSurface,
+            text = label
+        )
+
+        LazyRow(
+            modifier = Modifier.padding(vertical = 16.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = spacedBy(space = 16.dp)
+        ) {
+            items(items = productionCompanies) { productionCompany ->
+                ProductionCompanyCard(
+                    modifier = Modifier.size(
+                        width = 192.dp,
+                        height = 128.dp
+                    ),
+                    productionCompany = productionCompany
+                )
+            }
         }
     }
 
