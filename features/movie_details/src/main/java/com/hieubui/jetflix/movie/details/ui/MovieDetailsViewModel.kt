@@ -8,18 +8,22 @@ import javax.inject.Inject
 
 @MovieDetailsScope
 class MovieDetailsViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+    state: SavedStateHandle,
 
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
 
     init {
-        val movieId = savedStateHandle.get<Int>("movieId") ?: -1
+        val movieId = state.get<Int>(KEY_MOVIE_ID) ?: -1
 
         getMovieDetails(movieId)
     }
 
     private fun getMovieDetails(movieId: Int) {
 
+    }
+
+    companion object {
+        private const val KEY_MOVIE_ID = "movieId"
     }
 }

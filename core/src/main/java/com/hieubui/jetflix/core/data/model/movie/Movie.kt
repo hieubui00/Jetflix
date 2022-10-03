@@ -1,4 +1,4 @@
-package com.hieubui.jetflix.core.data.model
+package com.hieubui.jetflix.core.data.model.movie
 
 import java.util.Date
 
@@ -15,5 +15,5 @@ data class Movie(
 
     val voteAverage: Float?,
 
-    val voteCount: Int
+    val voteCount: Int?
 )
