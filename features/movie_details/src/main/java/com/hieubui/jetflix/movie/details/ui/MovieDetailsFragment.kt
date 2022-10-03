@@ -15,11 +15,17 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.BottomCenter
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.core.view.WindowCompat.getInsetsController
 import androidx.fragment.app.Fragment
 import com.hieubui.jetflix.movie.details.ui.component.BackButton
@@ -43,12 +49,14 @@ class MovieDetailsFragment : Fragment() {
 
     @Composable
     private fun Content(modifier: Modifier = Modifier) {
+        val title = "White Elephant"
+        val originalTitle = null
         val backdrop = "https://image.tmdb.org/t/p/original/cyV2syN5zRQwU6BmWMyMFyjRLow.jpg"
         val poster = "https://image.tmdb.org/t/p/w342/lG56H40Y1BuHSPoWtEgDJsSgDBZ.jpg"
         val scrollState = rememberScrollState()
 
         Column(modifier = modifier.verticalScroll(scrollState)) {
-            Box {
+            Box(modifier = Modifier.zIndex(zIndex = 2f)) {
                 Backdrop(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -70,6 +78,27 @@ class MovieDetailsFragment : Fragment() {
                         .padding(top = 128.dp)
                         .align(alignment = BottomCenter),
                     data = poster
+                )
+            }
+
+            Text(   // Title
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .align(alignment = CenterHorizontally),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Medium,
+                color = colors.onSurface,
+                text = title
+            )
+
+            originalTitle?.let {
+                Text(   // Original name
+                    modifier = Modifier
+                        .padding(top = 4.dp)
+                        .align(alignment = CenterHorizontally),
+                    fontSize = 14.sp,
+                    color = colors.onSurface,
+                    text = "($originalTitle)"
                 )
             }
         }
