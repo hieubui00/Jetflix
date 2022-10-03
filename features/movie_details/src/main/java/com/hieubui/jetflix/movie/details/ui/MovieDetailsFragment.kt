@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat.getInsetsController
 import androidx.fragment.app.Fragment
 import com.hieubui.jetflix.movie.details.ui.component.BackButton
+import com.hieubui.jetflix.movie.details.ui.component.Backdrop
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 
 class MovieDetailsFragment : Fragment() {
@@ -37,10 +40,18 @@ class MovieDetailsFragment : Fragment() {
 
     @Composable
     private fun Content(modifier: Modifier = Modifier) {
+        val backdrop = "https://image.tmdb.org/t/p/original/cyV2syN5zRQwU6BmWMyMFyjRLow.jpg"
         val scrollState = rememberScrollState()
 
         Column(modifier = modifier.verticalScroll(scrollState)) {
             Box {
+                Backdrop(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(256.dp),
+                    data = backdrop
+                )
+
                 BackButton(
                     modifier = Modifier
                         .statusBarsPadding()
