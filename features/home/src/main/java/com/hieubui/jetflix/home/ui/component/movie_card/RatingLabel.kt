@@ -6,7 +6,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -14,13 +15,14 @@ import androidx.compose.ui.unit.sp
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 
 @Composable
-internal fun MovieRating(
+internal fun RatingLabel(
     modifier: Modifier = Modifier,
     rating: Float?
 ) {
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(size = 16.dp),
+        color = White,
         elevation = 4.dp
     ) {
         Text(
@@ -28,7 +30,7 @@ internal fun MovieRating(
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             maxLines = 1,
-            color = Color.Black,
+            color = Black,
             text = (rating ?: 0.0f).toString()
         )
     }
@@ -36,8 +38,8 @@ internal fun MovieRating(
 
 @Preview
 @Composable
-private fun MovieRatingPreview() {
+private fun RatingLabelPreview() {
     JetflixTheme {
-        MovieRating(rating = 7.0f)
+        RatingLabel(rating = 7.0f)
     }
 }

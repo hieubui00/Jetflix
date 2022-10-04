@@ -5,12 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
+import androidx.appcompat.app.AppCompatDelegate.getDefaultNightMode
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells.Adaptive
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -33,6 +39,7 @@ import com.hieubui.jetflix.home.ui.component.ActionBar
 import com.hieubui.jetflix.home.ui.component.FilterButton
 import com.hieubui.jetflix.home.ui.component.movie_card.MovieCard
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
+import com.hieubui.jetflix.resources.util.setLightStatusBar
 import com.hieubui.jetflix.ui.main.MainActivity
 import com.hieubui.jetflix.util.ViewModelFactory
 import javax.inject.Inject
@@ -62,10 +69,13 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
-        fitsSystemWindows = true
         setContent {
             JetflixTheme {
-                this@HomeFragment.Content()
+                this@HomeFragment.Content(
+                    modifier = Modifier
+                        .background(colors.surface)
+                        .navigationBarsPadding()
+                )
             }
         }
     }
@@ -80,41 +90,56 @@ class HomeFragment : Fragment() {
             content = { padding ->
                 val movies by model.movies.observeAsState(null)
 
-                movies?.let {
-                    LazyVerticalGrid(
+                if (movies == null) {
+                    Loading(
                         modifier = Modifier
+                            .statusBarsPadding()
                             .padding(padding)
-                            .padding(horizontal = 16.dp),
-                        columns = Adaptive(minSize = 128.dp),
-                        horizontalArrangement = spacedBy(space = 12.dp),
-                        verticalArrangement = spacedBy(space = 12.dp),
-                        contentPadding = PaddingValues(vertical = 16.dp)
-                    ) {
-                        items(items = it) { movie ->
-                            MovieCard(
-                                movie = movie,
-                                onClick = { navigateToMovieDetails(movie) }
-                            )
-                        }
-                    }
-                } ?: Box(
+                    )
+                    return@Scaffold
+                }
+
+                LazyVerticalGrid(
                     modifier = Modifier
                         .padding(padding)
-                        .fillMaxSize()
+                        .padding(horizontal = 16.dp),
+                    columns = Adaptive(minSize = 128.dp),
+                    horizontalArrangement = spacedBy(space = 12.dp),
+                    verticalArrangement = spacedBy(space = 12.dp),
+                    contentPadding = PaddingValues(vertical = 16.dp)
                 ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .align(alignment = Center)
-                    )
+                    items(items = movies!!) { movie ->
+                        MovieCard(
+                            movie = movie,
+                            onClick = { navigateToMovieDetails(movie) }
+                        )
+                    }
                 }
             }
         )
+    }
+
+    @Composable
+    private fun Loading(modifier: Modifier = Modifier) {
+        Box(modifier = modifier.fillMaxSize()) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(48.dp)
+                    .align(alignment = Center)
+            )
+        }
     }
 
     private fun navigateToMovieDetails(movie: Movie) {
         val directions = HomeFragmentDirections.navigateToMovieDetails(movie.movieId ?: -1)
 
         findNavController().navigate(directions)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val nightMode = getDefaultNightMode()
+
+        setLightStatusBar(nightMode == MODE_NIGHT_NO || nightMode == MODE_NIGHT_UNSPECIFIED)
+        super.onViewCreated(view, savedInstanceState)
     }
 }

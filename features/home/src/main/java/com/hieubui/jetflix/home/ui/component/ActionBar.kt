@@ -1,5 +1,8 @@
 package com.hieubui.jetflix.home.ui.component
 
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -9,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.IconToggleButton
@@ -32,12 +36,14 @@ internal fun ActionBar(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(height = 56.dp)
             .background(colors.surface)
             .then(modifier),
         elevation = 8.dp
     ) {
         Row(
+            modifier = Modifier
+                .statusBarsPadding()
+                .height(height = 56.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -65,7 +71,11 @@ internal fun ActionBar(
                     .padding(horizontal = 16.dp)
                     .size(size = 24.dp),
                 checked = isDarkMode,
-                onCheckedChange = { }
+                onCheckedChange = { isNightMode ->
+                    val mode = MODE_NIGHT_YES.takeIf { isNightMode } ?: MODE_NIGHT_NO
+
+                    AppCompatDelegate.setDefaultNightMode(mode)
+                }
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_sunny),

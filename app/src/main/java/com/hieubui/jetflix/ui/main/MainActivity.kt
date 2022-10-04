@@ -1,13 +1,13 @@
 package com.hieubui.jetflix.ui.main
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.fragment.app.FragmentActivity
 import com.hieubui.jetflix.JetflixApplication
 import com.hieubui.jetflix.R
 import com.hieubui.jetflix.inject.component.MainComponent
 
-class MainActivity : FragmentActivity() {
+class MainActivity : AppCompatActivity() {
     lateinit var component: MainComponent
         private set
 

@@ -7,6 +7,7 @@ ext {
         core              : '1.9.0',
         coroutines        : '1.6.4',
 
+        appcompat         : '1.4.1',
         compose           : '1.2.1',
 
         fragment          : '1.5.2',
@@ -32,6 +33,8 @@ ext {
     libs = [
         core                     : "androidx.core:core-ktx:${versions.core}",
         coroutines               : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}",
+
+        appcompat                : "androidx.appcompat:appcompat:${versions.appcompat}",
 
         composeUI                : "androidx.compose.ui:ui:${versions.compose}",
         composeToolingPreview    : "androidx.compose.ui:ui-tooling-preview:${versions.compose}",

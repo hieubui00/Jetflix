@@ -30,6 +30,7 @@ android {
 
 dependencies {
     api(
+        libs.appcompat,
         libs.core,
         libs.composeUI,
         libs.composeToolingPreview,

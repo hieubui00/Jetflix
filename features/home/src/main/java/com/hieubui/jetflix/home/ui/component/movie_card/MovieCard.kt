@@ -49,7 +49,7 @@ internal fun MovieCard(
             )
         }
 
-        MovieRating(
+        RatingLabel(
             modifier = Modifier.align(alignment = Alignment.TopCenter),
             rating = movie.voteAverage
         )

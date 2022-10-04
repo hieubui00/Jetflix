@@ -42,7 +42,6 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import androidx.core.view.WindowCompat.getInsetsController
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -55,6 +54,7 @@ import com.hieubui.jetflix.movie.details.ui.component.PosterCard
 import com.hieubui.jetflix.movie.details.ui.component.ProductionCompanyCard
 import com.hieubui.jetflix.movie.details.ui.component.RatingBar
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
+import com.hieubui.jetflix.resources.util.setLightStatusBar
 import com.hieubui.jetflix.resources.util.toString
 import com.hieubui.jetflix.ui.main.MainActivity
 import com.hieubui.jetflix.util.ViewModelFactory
@@ -89,7 +89,11 @@ class MovieDetailsFragment : Fragment() {
     ): View = ComposeView(requireContext()).apply {
         setContent {
             JetflixTheme {
-                this@MovieDetailsFragment.Content(modifier = Modifier.navigationBarsPadding())
+                this@MovieDetailsFragment.Content(
+                    modifier = Modifier
+                        .background(colors.surface)
+                        .navigationBarsPadding()
+                )
             }
         }
     }
@@ -104,12 +108,7 @@ class MovieDetailsFragment : Fragment() {
             return
         }
 
-        setLightStatusBar(false)
-        Column(
-            modifier = modifier
-                .verticalScroll(scrollState)
-                .background(colors.surface)
-        ) {
+        Column(modifier = modifier.verticalScroll(scrollState)) {
             Box(modifier = Modifier.zIndex(zIndex = 2f)) {
                 Backdrop(
                     modifier = Modifier
@@ -280,15 +279,8 @@ class MovieDetailsFragment : Fragment() {
         activity?.onBackPressedDispatcher?.onBackPressed()
     }
 
-    private fun setLightStatusBar(isLightStatusBar: Boolean) {
-        val window = requireActivity().window
-        val view = requireView()
-
-        getInsetsController(window, view).isAppearanceLightStatusBars = isLightStatusBar
-    }
-
-    override fun onDestroyView() {
-        setLightStatusBar(true)
-        super.onDestroyView()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setLightStatusBar(false)
     }
 }
