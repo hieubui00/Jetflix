@@ -7,5 +7,7 @@ data class Crew(
 
     val originalName: String?,
 
-    val avatar: String?
+    val avatar: String?,
+
+    val job: String?
 )

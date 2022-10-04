@@ -47,11 +47,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.hieubui.jetflix.core.data.model.Company
 import com.hieubui.jetflix.core.data.model.movie.credits.Cast
+import com.hieubui.jetflix.core.data.model.movie.credits.Crew
 import com.hieubui.jetflix.movie.details.R.string
 import com.hieubui.jetflix.movie.details.inject.component.DaggerMovieDetailsComponent
 import com.hieubui.jetflix.movie.details.ui.component.BackButton
 import com.hieubui.jetflix.movie.details.ui.component.Backdrop
 import com.hieubui.jetflix.movie.details.ui.component.CastCard
+import com.hieubui.jetflix.movie.details.ui.component.CrewCard
 import com.hieubui.jetflix.movie.details.ui.component.MoreButton
 import com.hieubui.jetflix.movie.details.ui.component.PosterCard
 import com.hieubui.jetflix.movie.details.ui.component.ProductionCompanyCard
@@ -224,6 +226,13 @@ class MovieDetailsFragment : Fragment() {
                 )
             }
 
+            movieDetails?.credits?.crews?.let {
+                CrewsSection(
+                    label = stringResource(string.crews),
+                    crews = it.take(16)
+                )
+            }
+
             movieDetails?.productionCompanies?.let {
                 ProductionCompaniesSection(
                     label = stringResource(string.production_companies),
@@ -276,6 +285,35 @@ class MovieDetailsFragment : Fragment() {
                 CastCard(
                     modifier = Modifier.width(128.dp),
                     cast = cast
+                )
+            }
+
+            item {
+                MoreButton { }
+            }
+        }
+    }
+
+    @Composable
+    private fun CrewsSection(label: String, crews: List<Crew>) {
+        Text( // Label
+            modifier = Modifier.padding(start = 16.dp),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Medium,
+            color = colors.onSurface,
+            text = label
+        )
+
+        LazyRow(
+            modifier = Modifier.padding(vertical = 16.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = spacedBy(space = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            items(items = crews) { crew ->
+                CrewCard(
+                    modifier = Modifier.width(128.dp),
+                    crew = crew
                 )
             }
 

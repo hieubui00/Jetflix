@@ -13,13 +13,16 @@ data class CrewModel(
     val originalName: String?,
 
     @SerializedName("profile_path")
-    val avatarPath: String?
+    val avatarPath: String?,
+
+    val job: String?
 ) {
 
     internal fun toData(): Crew = Crew(
         crewId = this.crewId,
         name = this.name,
         originalName = this.originalName,
-        avatar = "https://image.tmdb.org/t/p/original${this.avatarPath}"
+        avatar = "https://image.tmdb.org/t/p/original${this.avatarPath}",
+        job = this.job
     )
 }

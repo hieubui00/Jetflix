@@ -24,15 +24,15 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
-import com.hieubui.jetflix.core.data.model.movie.credits.Cast
+import com.hieubui.jetflix.core.data.model.movie.credits.Crew
 import com.hieubui.jetflix.movie.details.R
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 import kotlinx.coroutines.Dispatchers
 
 @Composable
-internal fun CastCard(
+internal fun CrewCard(
     modifier: Modifier = Modifier,
-    cast: Cast?
+    crew: Crew?
 ) {
     Column(
         modifier = modifier,
@@ -43,7 +43,7 @@ internal fun CastCard(
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth()
                 .aspectRatio(ratio = 1f),
-            avatar = cast?.avatar
+            avatar = crew?.avatar
         )
 
         Text(
@@ -56,7 +56,7 @@ internal fun CastCard(
             textAlign = Center,
             maxLines = 1,
             overflow = Ellipsis,
-            text = cast?.name.orEmpty()
+            text = crew?.name.orEmpty()
         )
 
         Text(
@@ -69,7 +69,7 @@ internal fun CastCard(
             textAlign = Center,
             maxLines = 1,
             overflow = Ellipsis,
-            text = cast?.character.orEmpty()
+            text = crew?.job.orEmpty()
         )
     }
 }
@@ -102,15 +102,15 @@ private fun AvatarCard(
 
 @Preview
 @Composable
-private fun CastCardPreview() {
+private fun CrewCardPreview() {
     JetflixTheme {
-        CastCard(
-            cast = Cast(
-                castId = 1,
+        CrewCard(
+            crew = Crew(
+                crewId = 1,
                 name = "Virginia Gardner",
                 originalName = "Virginia Gardner",
                 avatar = "https://image.tmdb.org/t/p/original/1DnNysK267b0te48KCkUlTKoTzj.jpg",
-                character = "Hunter"
+                job = "Director"
             )
         )
     }
