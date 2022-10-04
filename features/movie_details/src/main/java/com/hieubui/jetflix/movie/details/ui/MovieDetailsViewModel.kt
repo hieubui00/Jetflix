@@ -6,7 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hieubui.jetflix.core.data.model.movie.MovieDetails
-import com.hieubui.jetflix.core.data.repository.MovieRepository
+import com.hieubui.jetflix.core.domain.usecase.GetMovieDetailsUseCase
 import com.hieubui.jetflix.movie.details.inject.scope.MovieDetailsScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class MovieDetailsViewModel @Inject constructor(
     state: SavedStateHandle,
 
-    private val movieRepository: MovieRepository,
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
 ) : ViewModel() {
     private val _movieDetails = MutableLiveData<MovieDetails>()
 
@@ -32,7 +32,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     private fun getMovieDetails(movieId: Int): Job = viewModelScope.launch {
         try {
-            val movieDetails = movieRepository.getMovieDetails(movieId)
+            val movieDetails = getMovieDetailsUseCase(movieId)
 
             _movieDetails.postValue(movieDetails)
         } catch (e: Exception) {

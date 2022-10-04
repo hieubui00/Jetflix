@@ -1,7 +1,7 @@
 package com.hieubui.jetflix.core.data.model
 
-data class ProductionCompany(
-    val productionCompanyId: Int?,
+data class Company(
+    val companyId: Int?,
 
     val name: String?,
 

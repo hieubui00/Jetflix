@@ -21,14 +21,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.hieubui.jetflix.core.data.model.ProductionCompany
+import com.hieubui.jetflix.core.data.model.Company
 import com.hieubui.jetflix.movie.details.R
 import kotlinx.coroutines.Dispatchers
 
 @Composable
 internal fun ProductionCompanyCard(
     modifier: Modifier = Modifier,
-    productionCompany: ProductionCompany
+    company: Company
 ) {
     Card(
         modifier = modifier,
@@ -45,7 +45,7 @@ internal fun ProductionCompanyCard(
         ) {
             val context = LocalContext.current
             val model = ImageRequest.Builder(context)
-                .data(productionCompany.logo)
+                .data(company.logo)
                 .dispatcher(Dispatchers.IO)
                 .crossfade(true)
                 .build()
@@ -66,7 +66,7 @@ internal fun ProductionCompanyCard(
                 color = Black,
                 maxLines = 1,
                 overflow = Ellipsis,
-                text = productionCompany.name.orEmpty()
+                text = company.name.orEmpty()
             )
         }
     }

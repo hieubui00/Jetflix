@@ -45,7 +45,7 @@ import androidx.compose.ui.zIndex
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.hieubui.jetflix.core.data.model.ProductionCompany
+import com.hieubui.jetflix.core.data.model.Company
 import com.hieubui.jetflix.movie.details.R.string
 import com.hieubui.jetflix.movie.details.inject.component.DaggerMovieDetailsComponent
 import com.hieubui.jetflix.movie.details.ui.component.BackButton
@@ -245,7 +245,7 @@ class MovieDetailsFragment : Fragment() {
     @Composable
     private fun ProductionCompaniesSection(
         label: String,
-        productionCompanies: List<ProductionCompany>
+        productionCompanies: List<Company>
     ) {
         Text( // Label
             modifier = Modifier.padding(
@@ -269,7 +269,7 @@ class MovieDetailsFragment : Fragment() {
                         width = 192.dp,
                         height = 128.dp
                     ),
-                    productionCompany = productionCompany
+                    company = productionCompany
                 )
             }
         }
