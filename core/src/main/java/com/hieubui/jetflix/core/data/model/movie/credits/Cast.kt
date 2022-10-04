@@ -7,5 +7,7 @@ data class Cast(
 
     val originalName: String?,
 
-    val avatar: String?
+    val avatar: String?,
+
+    val character: String?
 )

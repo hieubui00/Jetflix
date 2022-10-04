@@ -46,10 +46,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.hieubui.jetflix.core.data.model.Company
+import com.hieubui.jetflix.core.data.model.movie.credits.Cast
 import com.hieubui.jetflix.movie.details.R.string
 import com.hieubui.jetflix.movie.details.inject.component.DaggerMovieDetailsComponent
 import com.hieubui.jetflix.movie.details.ui.component.BackButton
 import com.hieubui.jetflix.movie.details.ui.component.Backdrop
+import com.hieubui.jetflix.movie.details.ui.component.CastCard
+import com.hieubui.jetflix.movie.details.ui.component.MoreButton
 import com.hieubui.jetflix.movie.details.ui.component.PosterCard
 import com.hieubui.jetflix.movie.details.ui.component.ProductionCompanyCard
 import com.hieubui.jetflix.movie.details.ui.component.RatingBar
@@ -206,11 +209,18 @@ class MovieDetailsFragment : Fragment() {
             movieDetails?.overview?.takeIf { it.isNotBlank() }?.let {
                 Text( // Overview
                     modifier = Modifier
-                        .padding(top = 16.dp)
+                        .padding(vertical = 16.dp)
                         .padding(horizontal = 16.dp),
                     fontSize = 16.sp,
                     color = colors.onSurface,
                     text = it
+                )
+            }
+
+            movieDetails?.credits?.casts?.let {
+                CastsSection(
+                    label = stringResource(string.casts),
+                    casts = it.take(16)
                 )
             }
 
@@ -242,16 +252,43 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
+    private fun back() {
+        activity?.onBackPressedDispatcher?.onBackPressed()
+    }
+
     @Composable
-    private fun ProductionCompaniesSection(
-        label: String,
-        productionCompanies: List<Company>
-    ) {
+    private fun CastsSection(label: String, casts: List<Cast>) {
         Text( // Label
-            modifier = Modifier.padding(
-                top = 16.dp,
-                start = 16.dp
-            ),
+            modifier = Modifier.padding(start = 16.dp),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Medium,
+            color = colors.onSurface,
+            text = label
+        )
+
+        LazyRow(
+            modifier = Modifier.padding(vertical = 16.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = spacedBy(space = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            items(items = casts) { cast ->
+                CastCard(
+                    modifier = Modifier.width(128.dp),
+                    cast = cast
+                )
+            }
+
+            item {
+                MoreButton { }
+            }
+        }
+    }
+
+    @Composable
+    private fun ProductionCompaniesSection(label: String, productionCompanies: List<Company>) {
+        Text( // Label
+            modifier = Modifier.padding(start = 16.dp),
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
             color = colors.onSurface,
@@ -273,10 +310,6 @@ class MovieDetailsFragment : Fragment() {
                 )
             }
         }
-    }
-
-    private fun back() {
-        activity?.onBackPressedDispatcher?.onBackPressed()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
