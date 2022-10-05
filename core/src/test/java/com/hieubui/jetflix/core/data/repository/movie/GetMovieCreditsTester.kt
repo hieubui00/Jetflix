@@ -2,7 +2,7 @@ package com.hieubui.jetflix.core.data.repository.movie
 
 import com.google.gson.Gson
 import com.hieubui.jetflix.core.data.remote.request.TheMovieDatabaseService
-import com.hieubui.jetflix.core.data.remote.response.MovieDetailsResponse
+import com.hieubui.jetflix.core.data.remote.response.MovieCreditsResponse
 import com.hieubui.jetflix.core.data.repository.MovieRepository
 import com.hieubui.jetflix.core.data.repository.MovieRepositoryImpl
 import io.mockk.MockKAnnotations
@@ -19,13 +19,14 @@ import retrofit2.HttpException
 import retrofit2.Response
 
 @ExperimentalCoroutinesApi
-internal class GetMovieDetailsTester {
+internal class GetMovieCreditsTester {
+
     @MockK
     private lateinit var theMovieDatabaseService: TheMovieDatabaseService
 
     @Before
     fun setup() {
-        MockKAnnotations.init(this@GetMovieDetailsTester)
+        MockKAnnotations.init(this@GetMovieCreditsTester)
     }
 
     private fun setupMovieRepository(scheduler: TestCoroutineScheduler): MovieRepository {
@@ -35,24 +36,29 @@ internal class GetMovieDetailsTester {
     }
 
     @Test
-    fun `When movie ID has found then return movie details data has same as response`() = runTest {
+    fun `When movie ID has found then return movie credits data has same as response`() = runTest {
         val movieRepository = setupMovieRepository(testScheduler)
         val movieId = 985939
-        val response = mockResponse<MovieDetailsResponse>("data/remote/response/movie_details.json")
+        val response = mockResponse<MovieCreditsResponse>("data/remote/response/movie_credits.json")
 
-        coEvery { theMovieDatabaseService.getMovieDetails(movieId, any()) }.returns(response)
+        coEvery { theMovieDatabaseService.getMovieCredits(movieId, any()) }.returns(response)
 
-        val result = movieRepository.getMovieDetails(movieId)
+        val result = movieRepository.getMovieCredits(movieId)
 
         assert(result.movieId == movieId)
-        assert(result.title == response.title)
-        assert(result.originalTitle == response.originalTitle)
-        assert(result.releaseDate == response.releaseDate)
-        assert(result.overview == response.overview)
-        assert(result.backdropPath == response.backdropPath)
-        assert(result.posterPath == response.posterPath)
-        assert(result.voteAverage == response.voteAverage)
-        assert(result.voteCount == response.voteCount)
+        assert(result.casts?.size == response.casts?.size)
+        assert(result.crews?.size == response.crews?.size)
+        assert(result.casts?.containsAll(response.casts ?: listOf()) == true)
+        assert(result.crews?.containsAll(response.crews ?: listOf()) == true)
+    }
+
+    private inline fun <reified T> mockResponse(fileName: String): T {
+        val responseJSON = javaClass.classLoader
+            ?.getResourceAsStream(fileName)
+            ?.bufferedReader()
+            ?.use { it.readText() }
+
+        return Gson().fromJson(responseJSON, T::class.java)
     }
 
     @Test(expected = HttpException::class)
@@ -63,16 +69,7 @@ internal class GetMovieDetailsTester {
         val response = Response.error<Nothing>(404, responseBody)
         val exception = HttpException(response)
 
-        coEvery { theMovieDatabaseService.getMovieDetails(movieId, any()) }.throws(exception)
-        movieRepository.getMovieDetails(movieId)
-    }
-
-    private inline fun <reified T> mockResponse(fileName: String): T {
-        val responseJSON = javaClass.classLoader
-            ?.getResourceAsStream(fileName)
-            ?.bufferedReader()
-            ?.use { it.readText() }
-
-        return Gson().fromJson(responseJSON, T::class.java)
+        coEvery { theMovieDatabaseService.getMovieCredits(movieId, any()) }.throws(exception)
+        movieRepository.getMovieCredits(movieId)
     }
 }

@@ -6,7 +6,8 @@ import com.hieubui.jetflix.core.data.remote.model.movie.credits.CreditsModel
 import com.hieubui.jetflix.core.data.remote.model.movie.credits.CrewModel
 
 data class MovieCreditsResponse(
-    val creditId: Int?,
+    @SerializedName("id")
+    val movieId: Int?,
 
     @SerializedName("cast")
     val casts: List<CastModel>?,
@@ -16,7 +17,7 @@ data class MovieCreditsResponse(
 ) {
 
     internal fun toModel(): CreditsModel = CreditsModel(
-        creditId = this.creditId,
+        movieId = this.movieId,
         casts = this.casts,
         crews = this.crews,
     )
