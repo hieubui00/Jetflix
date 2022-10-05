@@ -222,14 +222,14 @@ class MovieDetailsFragment : Fragment() {
             movieDetails?.credits?.casts?.let {
                 CastsSection(
                     label = stringResource(string.casts),
-                    casts = it.take(16)
+                    casts = it
                 )
             }
 
             movieDetails?.credits?.crews?.let {
                 CrewsSection(
                     label = stringResource(string.crews),
-                    crews = it.take(16)
+                    crews = it
                 )
             }
 
@@ -281,15 +281,19 @@ class MovieDetailsFragment : Fragment() {
             horizontalArrangement = spacedBy(space = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            items(items = casts) { cast ->
+            val limit = 16
+
+            items(items = casts.take(limit)) { cast ->
                 CastCard(
                     modifier = Modifier.width(128.dp),
                     cast = cast
                 )
             }
 
-            item {
-                MoreButton { }
+            if (casts.size > limit) {
+                item {
+                    MoreButton { }
+                }
             }
         }
     }
@@ -310,15 +314,19 @@ class MovieDetailsFragment : Fragment() {
             horizontalArrangement = spacedBy(space = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            items(items = crews) { crew ->
+            val limit = 16
+
+            items(items = crews.take(limit)) { crew ->
                 CrewCard(
                     modifier = Modifier.width(128.dp),
                     crew = crew
                 )
             }
 
-            item {
-                MoreButton { }
+            if (crews.size > limit) {
+                item {
+                    MoreButton { }
+                }
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.hieubui.jetflix.core.data.repository
 
-import com.hieubui.jetflix.core.data.model.movie.Movie
 import com.hieubui.jetflix.core.data.remote.model.movie.DetailsModel
+import com.hieubui.jetflix.core.data.remote.model.movie.MovieModel
 import com.hieubui.jetflix.core.data.remote.model.movie.credits.CreditsModel
 import com.hieubui.jetflix.core.data.remote.request.TheMovieDatabaseService
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,7 +16,7 @@ interface MovieRepository {
     suspend fun getDiscoverMovies(
         page: Int = 1,
         language: String = Locale.getDefault().language
-    ): List<Movie>
+    ): List<MovieModel>
 
     suspend fun getMovieDetails(
         movieId: Int,
@@ -38,14 +38,14 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getDiscoverMovies(
         page: Int,
         language: String
-    ): List<Movie> = withContext(ioDispatcher) {
+    ): List<MovieModel> = withContext(ioDispatcher) {
         if (page < 1 || page > 500) {
             return@withContext listOf()
         }
 
         val response = service.getDiscoverMovies(page, language)
 
-        return@withContext response.results?.map { it.toData() } ?: listOf()
+        return@withContext response.results ?: listOf()
     }
 
     override suspend fun getMovieDetails(

@@ -48,7 +48,7 @@ internal class MovieRepositoryTester {
     }
 
     @Test
-    fun `When page greater than 0 and less than 500 then return a data list`() = runTest {
+    fun `When page greater than 0 and less than 500 then return a data list same as response`() = runTest {
         val movieRepository = setupMovieRepository(testScheduler)
         val response = mockResponse<MoviesResponse>("discover_movies_response.json")
 
@@ -57,7 +57,7 @@ internal class MovieRepositoryTester {
         val testCases = (1..5) + (495..500)
         val result = testCases.map { movieRepository.getDiscoverMovies(it) }
 
-        assert(result.all { it.size == response.results?.size })
+        assert(result.all { it.size == response.results?.size && it == response.results })
     }
 
     private inline fun <reified T> mockResponse(fileName: String): T {

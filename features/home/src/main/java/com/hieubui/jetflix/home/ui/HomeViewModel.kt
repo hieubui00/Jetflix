@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hieubui.jetflix.core.data.model.movie.Movie
-import com.hieubui.jetflix.core.data.repository.MovieRepository
+import com.hieubui.jetflix.core.domain.usecase.GetDiscoverMoviesUseCase
 import com.hieubui.jetflix.home.injection.scope.HomeScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HomeScope
 class HomeViewModel @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val getDiscoverMoviesUseCase: GetDiscoverMoviesUseCase
 ) : ViewModel() {
     private val _movies = MutableLiveData<List<Movie>>()
 
@@ -29,7 +29,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getDiscoverMovies(page: Int): Job = viewModelScope.launch {
         try {
-            val movies = movieRepository.getDiscoverMovies(page)
+            val movies = getDiscoverMoviesUseCase(page)
 
             _movies.postValue(movies)
         } catch (e: Exception) {
