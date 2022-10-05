@@ -1,8 +1,10 @@
-package com.hieubui.jetflix.core.data.repository
+package com.hieubui.jetflix.core.data.repository.movie
 
 import com.google.gson.Gson
 import com.hieubui.jetflix.core.data.remote.request.TheMovieDatabaseService
 import com.hieubui.jetflix.core.data.remote.response.MoviesResponse
+import com.hieubui.jetflix.core.data.repository.MovieRepository
+import com.hieubui.jetflix.core.data.repository.MovieRepositoryImpl
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -14,13 +16,13 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-internal class MovieRepositoryTester {
+internal class GetDiscoverMoviesTester {
     @MockK
     private lateinit var theMovieDatabaseService: TheMovieDatabaseService
 
     @Before
     fun setup() {
-        MockKAnnotations.init(this@MovieRepositoryTester)
+        MockKAnnotations.init(this@GetDiscoverMoviesTester)
     }
 
     private fun setupMovieRepository(scheduler: TestCoroutineScheduler): MovieRepository {
@@ -50,7 +52,7 @@ internal class MovieRepositoryTester {
     @Test
     fun `When page greater than 0 and less than 500 then return a data list same as response`() = runTest {
         val movieRepository = setupMovieRepository(testScheduler)
-        val response = mockResponse<MoviesResponse>("discover_movies_response.json")
+        val response = mockResponse<MoviesResponse>("data/remote/response/discover_movies.json")
 
         coEvery { theMovieDatabaseService.getDiscoverMovies(any()) }.returns(response)
 
