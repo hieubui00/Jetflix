@@ -54,7 +54,7 @@ internal class GetDiscoverMoviesTester {
         val movieRepository = setupMovieRepository(testScheduler)
         val response = mockResponse<MoviesResponse>("data/remote/response/discover_movies.json")
 
-        coEvery { theMovieDatabaseService.getDiscoverMovies(any()) }.returns(response)
+        coEvery { theMovieDatabaseService.getDiscoverMovies(any(), any(), any()) }.returns(response)
 
         val testCases = (1..5) + (495..500)
         val result = testCases.map { movieRepository.getDiscoverMovies(it) }

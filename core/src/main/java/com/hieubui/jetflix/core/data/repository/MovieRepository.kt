@@ -4,6 +4,8 @@ import com.hieubui.jetflix.core.data.remote.model.movie.DetailsModel
 import com.hieubui.jetflix.core.data.remote.model.movie.MovieModel
 import com.hieubui.jetflix.core.data.remote.model.movie.credits.CreditsModel
 import com.hieubui.jetflix.core.data.remote.request.TheMovieDatabaseService
+import com.hieubui.jetflix.core.util.SortBy
+import com.hieubui.jetflix.core.util.SortOrder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -15,7 +17,9 @@ interface MovieRepository {
 
     suspend fun getDiscoverMovies(
         page: Int = 1,
-        language: String = Locale.getDefault().language
+        language: String = Locale.getDefault().language,
+        sortBy: SortBy = SortBy.POPULARITY,
+        sortOrder: SortOrder = SortOrder.DESCENDING
     ): List<MovieModel>
 
     suspend fun getMovieDetails(
@@ -37,13 +41,19 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getDiscoverMovies(
         page: Int,
-        language: String
+        language: String,
+        sortBy: SortBy,
+        sortOrder: SortOrder
     ): List<MovieModel> = withContext(ioDispatcher) {
         if (page < 1 || page > 500) {
             return@withContext listOf()
         }
 
-        val response = service.getDiscoverMovies(page, language)
+        val response = service.getDiscoverMovies(
+            page = page,
+            language = language,
+            sortBy = "${sortBy.name.lowercase()}.${sortOrder.code}"
+        )
 
         return@withContext response.results ?: listOf()
     }

@@ -28,7 +28,7 @@ class DiscoverMoviesPagingSource @Inject constructor(
         LoadResult.Page(
             data = response,
             prevKey = null,
-            nextKey = page.takeIf { it <= 500 }?.plus(1)
+            nextKey = page.takeIf { it <= 500 && response.isNotEmpty() }?.plus(1)
         )
     } catch (e: Exception) {
         Timber.e(e)

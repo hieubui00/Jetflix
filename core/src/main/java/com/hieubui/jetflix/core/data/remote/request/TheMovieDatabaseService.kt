@@ -13,7 +13,8 @@ interface TheMovieDatabaseService {
     @GET("/3/discover/movie")
     suspend fun getDiscoverMovies(
         @Query("page") page: Int = 1,
-        @Query("language") language: String = Locale.getDefault().language
+        @Query("language") language: String = Locale.getDefault().language,
+        @Query("sort_by") sortBy: String
     ): MoviesResponse
 
     @GET("/3/movie/{movieId}")
