@@ -2,7 +2,8 @@ package com.hieubui.jetflix.core.data.remote.model.movie
 
 import com.google.gson.annotations.SerializedName
 import com.hieubui.jetflix.core.data.model.movie.Movie
-import java.util.Date
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 data class MovieModel(
     @SerializedName("id")
@@ -11,7 +12,7 @@ data class MovieModel(
     val title: String?,
 
     @SerializedName("release_date")
-    val releaseDate: Date?,
+    val releaseDate: String?,
 
     @SerializedName("backdrop_path")
     val backdropPath: String?,
@@ -29,7 +30,9 @@ data class MovieModel(
     internal fun toData(): Movie = Movie(
         movieId = this.movieId,
         title = this.title,
-        releaseDate = this.releaseDate,
+        releaseDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            .runCatching { this@MovieModel.releaseDate?.let { parse(it) } }
+            .getOrNull(),
         backdrop = "https://image.tmdb.org/t/p/original${this.backdropPath}",
         poster = "https://image.tmdb.org/t/p/w342${this.posterPath}",
         voteAverage = this.voteAverage,

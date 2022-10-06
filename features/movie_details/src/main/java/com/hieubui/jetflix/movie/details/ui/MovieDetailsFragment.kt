@@ -142,6 +142,7 @@ class MovieDetailsFragment : Fragment() {
             Text( // Title
                 modifier = Modifier
                     .padding(top = 16.dp)
+                    .padding(horizontal = 16.dp)
                     .align(alignment = CenterHorizontally),
                 fontSize = 24.sp,
                 fontWeight = Bold,

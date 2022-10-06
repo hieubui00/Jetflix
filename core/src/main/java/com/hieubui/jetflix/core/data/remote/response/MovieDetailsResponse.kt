@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName
 import com.hieubui.jetflix.core.data.remote.model.CompanyModel
 import com.hieubui.jetflix.core.data.remote.model.GenreModel
 import com.hieubui.jetflix.core.data.remote.model.movie.DetailsModel
-import java.util.Date
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 data class MovieDetailsResponse(
     @SerializedName("id")
@@ -21,7 +22,7 @@ data class MovieDetailsResponse(
     val genres: List<GenreModel>?,
 
     @SerializedName("release_date")
-    val releaseDate: Date?,
+    val releaseDate: String?,
 
     @SerializedName("production_companies")
     val productionCompanies: List<CompanyModel>?,
@@ -47,7 +48,9 @@ data class MovieDetailsResponse(
         originalTitle = this.originalTitle,
         duration = this.duration,
         genres = this.genres,
-        releaseDate = this.releaseDate,
+        releaseDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            .runCatching { this@MovieDetailsResponse.releaseDate?.let { parse(it) } }
+            .getOrNull(),
         productionCompanies = this.productionCompanies,
         overview = this.overview,
         backdropPath = this.backdropPath,
