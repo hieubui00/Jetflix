@@ -60,11 +60,13 @@ dependencies {
     implementation project(':resources')
 
     api(
-        libs.composeLiveData,
         libs.lifecycleRuntime,
+        libs.composeLiveData,
         libs.navigationFragment,
         libs.navigationUI,
         libs.navigationDynamicFeatures,
+        libs.paging,
+        libs.pagingCompose,
         libs.dagger
     )
 

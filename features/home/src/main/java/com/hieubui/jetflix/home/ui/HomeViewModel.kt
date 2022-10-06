@@ -1,39 +1,28 @@
 package com.hieubui.jetflix.home.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.hieubui.jetflix.core.data.model.movie.Movie
-import com.hieubui.jetflix.core.domain.usecase.GetDiscoverMoviesUseCase
+import com.hieubui.jetflix.home.data.source.DiscoverMoviesPagingSource
 import com.hieubui.jetflix.home.injection.scope.HomeScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HomeScope
 class HomeViewModel @Inject constructor(
-    private val getDiscoverMoviesUseCase: GetDiscoverMoviesUseCase
+    private val discoverMoviesPagingSource: DiscoverMoviesPagingSource
 ) : ViewModel() {
-    private val _movies = MutableLiveData<List<Movie>>()
-
-    private var currentPage = 1
-
-    val movies: LiveData<List<Movie>>
-        get() = _movies
+    val movies: Flow<PagingData<Movie>>
 
     init {
-        getDiscoverMovies(currentPage)
-    }
+        val pagingConfig = PagingConfig(pageSize = 16)
 
-    private fun getDiscoverMovies(page: Int): Job = viewModelScope.launch {
-        try {
-            val movies = getDiscoverMoviesUseCase(page)
-
-            _movies.postValue(movies)
-        } catch (e: Exception) {
-            Timber.e(e)
-        }
+        movies = Pager(pagingConfig) { discoverMoviesPagingSource }
+            .flow
+            .cachedIn(viewModelScope)
     }
 }

@@ -16,16 +16,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells.Adaptive
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -33,10 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.hieubui.jetflix.core.data.model.movie.Movie
 import com.hieubui.jetflix.home.injection.component.DaggerHomeComponent
 import com.hieubui.jetflix.home.ui.component.ActionBar
 import com.hieubui.jetflix.home.ui.component.FilterButton
+import com.hieubui.jetflix.home.ui.component.LoadingIndicator
 import com.hieubui.jetflix.home.ui.component.movie_card.MovieCard
 import com.hieubui.jetflix.resources.ui.theme.JetflixTheme
 import com.hieubui.jetflix.resources.util.setLightStatusBar
@@ -88,46 +87,55 @@ class HomeFragment : Fragment() {
             floatingActionButton = { FilterButton(onClick = { }) },
             backgroundColor = colors.background,
             content = { padding ->
-                val movies by model.movies.observeAsState(null)
+                val movies = model.movies.collectAsLazyPagingItems()
 
-                if (movies == null) {
-                    Loading(
-                        modifier = Modifier
-                            .statusBarsPadding()
-                            .padding(padding)
-                    )
-                    return@Scaffold
-                }
+                when (movies.loadState.refresh) {
+                    is LoadState.Loading -> {
+                        Box(modifier = modifier.fillMaxSize()) {
+                            LoadingIndicator(
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .align(alignment = Center)
+                            )
+                        }
+                    }
 
-                LazyVerticalGrid(
-                    modifier = Modifier
-                        .padding(padding)
-                        .padding(horizontal = 16.dp),
-                    columns = Adaptive(minSize = 128.dp),
-                    horizontalArrangement = spacedBy(space = 12.dp),
-                    verticalArrangement = spacedBy(space = 12.dp),
-                    contentPadding = PaddingValues(vertical = 16.dp)
-                ) {
-                    items(items = movies!!) { movie ->
-                        MovieCard(
-                            movie = movie,
-                            onClick = { navigateToMovieDetails(movie) }
-                        )
+                    is LoadState.Error -> {
+                    }
+
+                    else -> {
+                        LazyVerticalGrid(
+                            modifier = Modifier
+                                .padding(padding)
+                                .padding(horizontal = 16.dp),
+                            columns = Adaptive(minSize = 128.dp),
+                            horizontalArrangement = spacedBy(space = 12.dp),
+                            verticalArrangement = spacedBy(space = 12.dp),
+                            contentPadding = PaddingValues(vertical = 16.dp)
+                        ) {
+                            items(count = movies.itemCount) { index ->
+                                MovieCard(
+                                    movie = movies[index]!!,
+                                    onClick = { navigateToMovieDetails(movies[index]!!) }
+                                )
+                            }
+
+                            if (movies.loadState.append is LoadState.Loading) {
+                                item(span = { GridItemSpan(currentLineSpan = Int.MAX_VALUE) }) {
+                                    Box(modifier = Modifier.padding(vertical = 8.dp)) {
+                                        LoadingIndicator(
+                                            modifier = Modifier
+                                                .size(48.dp)
+                                                .align(alignment = Center)
+                                        )
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         )
-    }
-
-    @Composable
-    private fun Loading(modifier: Modifier = Modifier) {
-        Box(modifier = modifier.fillMaxSize()) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .size(48.dp)
-                    .align(alignment = Center)
-            )
-        }
     }
 
     private fun navigateToMovieDetails(movie: Movie) {

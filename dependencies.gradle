@@ -15,6 +15,7 @@ ext {
         lifecycle         : '2.5.1',
         navigation        : '2.5.2',
         room              : '2.4.2',
+        paging            : "3.1.1",
 
         dagger            : '2.44',
         gson              : '2.9.1',
@@ -49,8 +50,11 @@ ext {
         navigationUI             : "androidx.navigation:navigation-ui-ktx:${versions.navigation}",
         navigationDynamicFeatures: "androidx.navigation:navigation-dynamic-features-fragment:${versions.navigation}",
 
-        roomRuntime              : "androidx.room:room-runtime:${versions.room}",
         room                     : "androidx.room:room-ktx:${versions.room}",
+        roomRuntime              : "androidx.room:room-runtime:${versions.room}",
+
+        paging                   : "androidx.paging:paging-runtime-ktx:${versions.paging}",
+        pagingCompose            : "androidx.paging:paging-compose:1.0.0-alpha16",
 
         dagger                   : "com.google.dagger:dagger:${versions.dagger}",
         gson                     : "com.google.code.gson:gson:${versions.gson}",
