@@ -94,7 +94,8 @@ class HomeFragment : Fragment() {
                     sheetContent = {
                         FilterBottomSheet(
                             onClose = { coroutineScope.launch { sheetState.hide() } },
-                            onApply = { coroutineScope.launch { sheetState.hide() } }
+                            onSelectedSortByChange = { model.setSortBy(it) },
+                            onSelectedSortOrderChange = { model.setSortOrder(it) }
                         )
                     },
                     content = {

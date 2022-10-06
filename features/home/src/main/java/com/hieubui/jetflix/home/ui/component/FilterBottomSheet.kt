@@ -40,31 +40,32 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Medium
 import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.hieubui.jetflix.core.util.SortBy
+import com.hieubui.jetflix.core.util.SortOrder
 import com.hieubui.jetflix.home.R
+import java.util.Locale
 
 @Composable
 internal fun FilterBottomSheet(
     onClose: () -> Unit,
-    onApply: () -> Unit
+    onSelectedSortByChange: (SortBy) -> Unit,
+    onSelectedSortOrderChange: (SortOrder) -> Unit
 ) {
     Column(
         modifier = Modifier
             .navigationBarsPadding()
             .padding(bottom = 8.dp),
     ) {
-        ActionBar(onClose, onApply)
+        ActionBar(onClose)
 
-        SortBySection()
+        SortBySection(onSelectedSortByChange)
 
-        SortOrderSection()
+        SortOrderSection(onSelectedSortOrderChange)
     }
 }
 
 @Composable
-private fun ActionBar(
-    onClose: () -> Unit,
-    onApply: () -> Unit
-) {
+private fun ActionBar(onClose: () -> Unit) {
     Surface(elevation = 4.dp) {
         Row(
             modifier = Modifier
@@ -93,17 +94,10 @@ private fun ActionBar(
             Spacer(modifier = Modifier.weight(weight = 1f))
 
             ActionButton(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(end = 16.dp),
                 imageVector = Default.Refresh,
                 contentDescription = stringResource(R.string.reset),
                 onClick = { }
-            )
-
-            ActionButton(
-                modifier = Modifier.padding(end = 16.dp),
-                imageVector = Default.Check,
-                contentDescription = stringResource(R.string.apply),
-                onClick = onApply
             )
         }
     }
@@ -129,26 +123,40 @@ private fun ActionButton(
 }
 
 @Composable
-private fun SortBySection() {
-    val sortByOptions = listOf("Popularity", "Release Date", "Vote Average", "Vote Count")
-    var selectedSortByOption by rememberSaveable { mutableStateOf(sortByOptions.first()) }
+private fun SortBySection(onSelectedSortByChange: (SortBy) -> Unit) {
+    val sortByOptions = SortBy.values().toList()
+    var selectedSortBy by rememberSaveable { mutableStateOf(sortByOptions.first()) }
 
     SortOptionSection(
         label = "Sort By",
         options = sortByOptions,
-        selectedOption = selectedSortByOption,
-        onSelectedOptionChange = { selectedSortByOption = it }
+        selectedOption = selectedSortBy,
+        onSelectedOptionChange = {
+            selectedSortBy = it
+            onSelectedSortByChange(it)
+        }
     )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun SortOptionSection(
+private fun <T> SortOptionSection(
     label: String,
-    options: List<String>,
-    selectedOption: String,
-    onSelectedOptionChange: (String) -> Unit
+    options: List<T>,
+    selectedOption: T,
+    onSelectedOptionChange: (T) -> Unit
 ) {
+    val sortOptions = options.map { option ->
+        option.toString()
+            .lowercase()
+            .split("_")
+            .joinToString(separator = " ", transform = {
+                it.replaceFirstChar { char ->
+                    if (char.isLowerCase()) char.titlecase(Locale.getDefault()) else it
+                }
+            })
+    }
+
     Text( // Label
         modifier = Modifier.padding(
             top = 8.dp,
@@ -164,7 +172,7 @@ private fun SortOptionSection(
         horizontalArrangement = spacedBy(space = 8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
-        itemsIndexed(items = options) { index, option ->
+        itemsIndexed(items = sortOptions) { index, option ->
             FilterChip(
                 selected = options[index] == selectedOption,
                 border = BorderStroke(
@@ -186,7 +194,10 @@ private fun SortOptionSection(
                         contentDescription = "Check"
                     )
                 },
-                onClick = { onSelectedOptionChange(options[index]) }
+                onClick = {
+                    if (options[index] == selectedOption) return@FilterChip
+                    onSelectedOptionChange(options[index])
+                }
             ) {
                 Text(
                     fontSize = 14.sp,
@@ -198,14 +209,17 @@ private fun SortOptionSection(
 }
 
 @Composable
-private fun SortOrderSection() {
-    val sortOrderOptions = listOf("Descending", "Ascending")
-    var selectedSortOrderOption by rememberSaveable { mutableStateOf(sortOrderOptions[0]) }
+private fun SortOrderSection(onSelectedSortOrderChange: (SortOrder) -> Unit) {
+    val sortOrderOptions = SortOrder.values().toList()
+    var selectedSortOrder by rememberSaveable { mutableStateOf(sortOrderOptions[0]) }
 
     SortOptionSection(
         label = "Sort Order",
         options = sortOrderOptions,
-        selectedOption = selectedSortOrderOption,
-        onSelectedOptionChange = { selectedSortOrderOption = it }
+        selectedOption = selectedSortOrder,
+        onSelectedOptionChange = {
+            selectedSortOrder = it
+            onSelectedSortOrderChange(it)
+        }
     )
 }
