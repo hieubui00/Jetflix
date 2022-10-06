@@ -220,21 +220,21 @@ class MovieDetailsFragment : Fragment() {
                 )
             }
 
-            movieDetails?.credits?.casts?.let {
+            movieDetails?.credits?.casts?.takeIf { it.isNotEmpty() }?.let {
                 CastsSection(
                     label = stringResource(string.casts),
                     casts = it
                 )
             }
 
-            movieDetails?.credits?.crews?.let {
+            movieDetails?.credits?.crews?.takeIf { it.isNotEmpty() }?.let {
                 CrewsSection(
                     label = stringResource(string.crews),
                     crews = it
                 )
             }
 
-            movieDetails?.productionCompanies?.let {
+            movieDetails?.productionCompanies?.takeIf { it.isNotEmpty() }?.let {
                 ProductionCompaniesSection(
                     label = stringResource(string.production_companies),
                     productionCompanies = it
