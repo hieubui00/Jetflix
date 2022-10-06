@@ -39,10 +39,7 @@ internal fun MovieCard(
             )
 
             MovieInformation(
-                modifier = Modifier
-                    .align(alignment = Alignment.BottomCenter)
-                    .background(Color(0x66000000))
-                    .padding(vertical = 4.dp),
+                modifier = Modifier.align(alignment = Alignment.BottomCenter),
                 title = movie.title,
                 releaseDate = movie.releaseDate,
                 voteCount = movie.voteCount

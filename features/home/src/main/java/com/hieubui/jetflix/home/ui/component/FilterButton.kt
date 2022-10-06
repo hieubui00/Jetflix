@@ -1,6 +1,5 @@
 package com.hieubui.jetflix.home.ui.component
 
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -18,9 +17,7 @@ fun FilterButton(
     onClick: () -> Unit
 ) {
     FloatingActionButton(
-        modifier = Modifier
-            .navigationBarsPadding()
-            .then(modifier),
+        modifier = modifier,
         backgroundColor = MaterialTheme.colors.primary,
         onClick = onClick
     ) {

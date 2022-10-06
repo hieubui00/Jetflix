@@ -6,4 +6,8 @@
     <string name="filter">Filter</string>
     <string name="calendar">Calendar</string>
     <string name="vote">Vote</string>
+    <string name="close">Close</string>
+    <string name="sort_and_filter">Sort and Filter</string>
+    <string name="reset">Reset</string>
+    <string name="apply">Apply</string>
 </resources>

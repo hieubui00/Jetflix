@@ -38,7 +38,10 @@ internal fun MovieInformation(
     voteCount: Int?
 ) {
     Column(
-        modifier = modifier,
+        modifier = Modifier
+            .background(Color(0x66000000))
+            .padding(vertical = 4.dp)
+            .then(modifier),
         verticalArrangement = spacedBy(4.dp)
     ) {
         Text( // Title
